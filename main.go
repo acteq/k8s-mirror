@@ -120,8 +120,8 @@ func main() {
 
 	handleDeployment := handleWithEnv(mutateDeployments, env) 
 
-	http.HandleFunc("/mutating-pods", handlePod)
-	http.HandleFunc("/mutating-pods", handleDeployment)
+	http.HandleFunc("/pods", handlePod)
+	http.HandleFunc("/deployments", handleDeployment)
 	http.HandleFunc("/ping", pong)
 	server := &http.Server{
 		Addr:      ":443",
