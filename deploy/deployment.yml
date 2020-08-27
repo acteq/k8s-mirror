@@ -2,23 +2,23 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: gcr-mirror-webhook
-  name: gcr-mirror-webhook
+    app: mirror-webhook
+  name: mirror-webhook
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gcr-mirror-webhook
+      app: mirror-webhook
   template:
     metadata:
       labels:
-        app: gcr-mirror-webhook
+        app: mirror-webhook
     spec:
       nodeName: node4
       containers:
-      - name: gcr-mirror-webhook
-        image: gcr-mirror-webhook:1.0
+      - name: mirror-webhook
+        image: k8s-mirror
         imagePullPolicy: IfNotPresent
         command: ["webhook"]
         args:  ["-tls-cert-file=/etc/kubernetes/pki/ca.pem", "-tls-private-key-file=/etc/kubernetes/pki/ca-key.pem"]
@@ -35,10 +35,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: gcr-mirror-service
+  name: mirror-service
 spec:
   selector:
-    app: gcr-mirror-webhook
+    app: mirror-webhook
   ports:
     - protocol: TCP
       port: 443
