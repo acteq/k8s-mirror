@@ -17,9 +17,9 @@ var config = koanf.New(".")
 
 func getConfigure() (mirror map[string]string, certFile string , keyFile string ) {
 
-	config.Load(env.Provider("gcrmirror_", ".", func(s string) string {
+	config.Load(env.Provider("mirror_", ".", func(s string) string {
 		return strings.Replace(strings.ToLower(
-			strings.TrimPrefix(s, "gcrmirror_")), "_", ".", -1)
+			strings.TrimPrefix(s, "mirror_")), "_", ".", -1)
 	}), nil)
 
 	f := flag.NewFlagSet("config", flag.ContinueOnError)
