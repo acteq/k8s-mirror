@@ -11,5 +11,5 @@ RUN apk update && \
    rm -rf /var/cache/apk/*
 WORKDIR /app
 COPY --from=development /app/goapp /app
-EXPOSE 8080
+EXPOSE 443
 ENTRYPOINT ["./goapp"]

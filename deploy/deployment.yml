@@ -18,7 +18,7 @@ spec:
       nodeName: node4
       containers:
       - name: mirror-webhook
-        image: k8s-mirror
+        image: docker.pkg.github.com/acteq/k8s-mirror/mirror
         imagePullPolicy: IfNotPresent
         command: ["webhook"]
         args:  ["-tls-cert-file=/etc/kubernetes/pki/ca.pem", "-tls-private-key-file=/etc/kubernetes/pki/ca-key.pem"]
