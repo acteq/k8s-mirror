@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"strings"
+	"strconv"
 	corev1 "k8s.io/api/core/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
@@ -26,6 +27,7 @@ type PatchOperation struct {
 func mutatePods(ar v1beta1.AdmissionReview, mirror map[string]string) *v1beta1.AdmissionResponse {
 	podResource := metav1.GroupVersionResource{Group: "", Version: "v1", Resource: "pods"}
 	if ar.Request.Resource != podResource {
+		// if ar.Request.Kind.Kind != "Pod" {
 		klog.Errorf("expect resource to be %s", podResource)
 		return nil
 	}
@@ -42,16 +44,21 @@ func mutatePods(ar v1beta1.AdmissionReview, mirror map[string]string) *v1beta1.A
 
 	length := len(pod.Spec.Containers)
 	patchs := make([]PatchOperation, 0, length)
-	for _, container := range pod.Spec.Containers {
+	for i, container := range pod.Spec.Containers {
 		for k, v := range mirror {
-			if strings.HasPrefix(container.Image, k) {
-				newContainer :=  container
-				newContainer.Image = strings.Replace(container.Image, k, v, -1)
+			originImage := container.Image
+			if strings.HasPrefix(originImage, k) {
+				// newContainer :=  container
+				// newContainer.Image = strings.Replace(originImage, k, v, -1)
+				newImage := strings.Replace(originImage, k, v, -1)
 				patchs = append(patchs, PatchOperation{
 					Op:    "replace",
-					Path:  "/spec/containers/-",//如果是数组类型，非第一个需要加上“/-”
-					Value: newContainer,
+					Path:  "/spec/containers/" + strconv.Itoa(i) +"/image",
+					Value: newImage,
 				})
+				// json-patch https://tools.ietf.org/html/rfc6902
+				// http://erosb.github.io/post/json-patch-vs-merge-patch/
+				klog.Infof(newImage)
 			}
 		}
 	}

@@ -6,6 +6,7 @@ metadata:
 data:
   conf.hcl: |
     mirror {
+        gcr.io = "registry.aliyuncs.com/google_containers"
         k8s.gcr.io = "registry.aliyuncs.com/google_containers"
         gcr.io = "registry.aliyuncs.com/google_containers"
         quay.io = "quay-mirror.qiniu.com"
@@ -30,9 +31,9 @@ spec:
     spec:
       containers:
       - name: mirror-webhook
-        image: docker.pkg.github.com/acteq/k8s-mirror/mirror
+        image: acte/k8s-mirror
         imagePullPolicy: IfNotPresent
-        command: ["webhook"]
+        command: ["/app/goapp"]
         args:  ["--conf=/etc/mirror/conf.hcl","--tls-cert-file=/etc/mirror/pki/tls.crt", "--tls-private-key-file=/etc/mirror/pki/tls.key"]
         volumeMounts:
           - mountPath: "/etc/mirror/"
@@ -51,7 +52,7 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: mirror-service
+  name: mirror-webhook
 spec:
   selector:
     app: mirror-webhook
