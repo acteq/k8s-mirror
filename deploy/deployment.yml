@@ -8,7 +8,6 @@ data:
     mirror {
         gcr.io = "registry.aliyuncs.com/google_containers"
         k8s.gcr.io = "registry.aliyuncs.com/google_containers"
-        gcr.io = "registry.aliyuncs.com/google_containers"
         quay.io = "quay-mirror.qiniu.com"
     }
 
@@ -32,7 +31,7 @@ spec:
       containers:
       - name: mirror-webhook
         image: acte/k8s-mirror
-        imagePullPolicy: IfNotPresent
+        imagePullPolicy: Always
         command: ["/app/goapp"]
         args:  ["--conf=/etc/mirror/conf.hcl","--tls-cert-file=/etc/mirror/pki/tls.crt", "--tls-private-key-file=/etc/mirror/pki/tls.key"]
         volumeMounts:

@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"strings"
-
+	"strconv"
 	appsv1 "k8s.io/api/apps/v1"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
@@ -31,16 +31,17 @@ func mutateDeployments(ar v1beta1.AdmissionReview, mirror map[string]string) *v1
 
 	length := len(deployment.Spec.Template.Spec.Containers)
 	patchs := make([]PatchOperation, 0, length)
-	for _, container := range deployment.Spec.Template.Spec.Containers {
+	for i, container := range deployment.Spec.Template.Spec.Containers {
 		for k, v := range mirror {
-			if strings.HasPrefix(container.Image, k) {
-				newContainer :=  container
-				newContainer.Image = strings.Replace(container.Image, k, v, -1)
+			originImage := container.Image
+			if strings.HasPrefix(originImage, k) {
+				newImage := strings.Replace(originImage, k, v, -1)
 				patchs = append(patchs, PatchOperation{
 					Op:    "replace",
-					Path:  "/spec/template/spec/containers/-",//如果是数组类型，非第一个需要加上“/-”
-					Value: newContainer,
+					Path:  "/spec/template/spec/containers/" + strconv.Itoa(i) +"/image",
+					Value: newImage,
 				})
+				klog.Infof(newImage)
 			}
 		}
 	}

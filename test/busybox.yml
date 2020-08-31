@@ -1,14 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
+  name: gcr-busybox
   labels:
     app: gcr-busybox
-  name: gcr-busybox
 spec:
   containers:
   - name: busybox
     image: k8s.gcr.io/busybox
-    args:
-    - /bin/sh
-    - -c
-    - sleep 10m
+    command: ['/bin/sh', '-c', 'sleep 60']

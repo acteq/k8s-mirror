@@ -16,7 +16,7 @@ spec:
         app: gcr-mirror-webhook
     spec:
       containers:
-      - name: busybox
+      - name: httpd
         image: k8s.gcr.io/busybox
         imagePullPolicy: IfNotPresent
-        args:  ["/bin/sh", "-c", "sleep 10m"]
+        command:  ["/bin/httpd", "-f", "-h "]

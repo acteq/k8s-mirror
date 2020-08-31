@@ -48,8 +48,6 @@ func mutatePods(ar v1beta1.AdmissionReview, mirror map[string]string) *v1beta1.A
 		for k, v := range mirror {
 			originImage := container.Image
 			if strings.HasPrefix(originImage, k) {
-				// newContainer :=  container
-				// newContainer.Image = strings.Replace(originImage, k, v, -1)
 				newImage := strings.Replace(originImage, k, v, -1)
 				patchs = append(patchs, PatchOperation{
 					Op:    "replace",
