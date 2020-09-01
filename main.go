@@ -116,12 +116,9 @@ func main() {
 
 	env, certFile, keyFile := getConfigure()
 	
-	handlePod := handleWithEnv(mutatePods, env)
+	handleMutate := handleWithEnv(mutateResource, env)
 
-	handleDeployment := handleWithEnv(mutateDeployments, env) 
-
-	http.HandleFunc("/pods", handlePod)
-	http.HandleFunc("/deployments", handleDeployment)
+	http.HandleFunc("/mutate", handleMutate)
 	http.HandleFunc("/ping", pong)
 	server := &http.Server{
 		Addr:      ":443",
