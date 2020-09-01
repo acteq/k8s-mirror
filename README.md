@@ -1,10 +1,10 @@
-# k8s-mirror-webhook
+# 介绍
 
-使用 k8s的时候，常常遇到镜像下载不了的问题，可以改从镜像站点下载。`k8s-mirror-webhook`是一个webhook，它监听pod和deployment的部署，把pod或deployment中的image改为镜像站点中的image。
+`k8s-mirror-webhook`是一个webhook，部署到kubernetes集群后，它会监听 `pod` 和`deployment`的部署，把要拉取的image改为镜像站点中的image。
 
 # 配置
-
-在 deploy/deployment.yml 文件中, 增加你需要的改写的原站点和对应的镜像站点，如下所示:
+ 
+在 deploy/deployment.yml 文件中, 设置image原站点和对应的镜像站点，如下所示:
 
     ---
     apiVersion: v1
