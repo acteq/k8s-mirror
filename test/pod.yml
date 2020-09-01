@@ -1,9 +1,9 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: k8s-mirror-webhook-test
+  name: k8s-mirror-webhook-pod-test
   labels:
-    app: k8s-mirror-webhook-test
+    app: k8s-mirror-webhook-pod-test
 spec:
   containers:
   - name: busybox

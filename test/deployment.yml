@@ -2,18 +2,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: k8s-mirror-webhook-test
-  name: k8s-mirror-webhook-test
+    app: k8s-mirror-webhook-deployment-test
+  name: k8s-mirror-webhook-deployment-test
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: k8s-mirror-webhook-test
+      app: k8s-mirror-webhook-deployment-test
   template:
     metadata:
       labels:
-        app: k8s-mirror-webhook-test
+        app: k8s-mirror-webhook-deployment-test
     spec:
       containers:
       - name: busybox
