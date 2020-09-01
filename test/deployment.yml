@@ -2,21 +2,21 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: gcr-mirror-webhook
-  name: gcr-mirror-webhook
+    app: k8s-mirror-webhook-test
+  name: k8s-mirror-webhook-test
   namespace: default
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: gcr-mirror-webhook
+      app: k8s-mirror-webhook-test
   template:
     metadata:
       labels:
-        app: gcr-mirror-webhook
+        app: k8s-mirror-webhook-test
     spec:
       containers:
-      - name: httpd
+      - name: busybox
         image: k8s.gcr.io/busybox
-        imagePullPolicy: IfNotPresent
-        command:  ["/bin/httpd", "-f", "-h "]
+        imagePullPolicy: Always
+        command: ['/bin/sh', '-c', 'sleep 60']

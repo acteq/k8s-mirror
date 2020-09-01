@@ -1,11 +1,12 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: gcr-busybox
+  name: k8s-mirror-webhook-test
   labels:
-    app: gcr-busybox
+    app: k8s-mirror-webhook-test
 spec:
   containers:
   - name: busybox
     image: k8s.gcr.io/busybox
+    imagePullPolicy: Always
     command: ['/bin/sh', '-c', 'sleep 60']
