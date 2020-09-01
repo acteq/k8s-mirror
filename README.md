@@ -22,3 +22,10 @@
 
     kubectl apply -f deploy/deployment.yml
 
+# 测试
+
+拉取 k8s.gcr.io/busybox 镜像
+
+    kubectl apply -f test/pod.yml
+    kubectl apply -f test/deployment.yml
+
