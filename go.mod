@@ -1,4 +1,4 @@
-module acteq.github.io/gcr-mirror
+module github.com/acteq/k8s-mirror
 
 go 1.14
 

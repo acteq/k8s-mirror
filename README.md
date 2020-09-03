@@ -29,3 +29,14 @@
     kubectl apply -f test/pod.yml
     kubectl apply -f test/deployment.yml
 
+# 使用 kubeadm 安装 k8s 集群时，访问国内镜像
+
+使用 kubeadm 安装kubernetes集群时，默认也会到k8s.gcr.io 拉取镜像，幸好可以另行指定kubeadmin的镜像仓库地址， 比如阿里云镜像仓库地址 registry.aliyuncs.com/google_containers。
+
+    $ kubeadm init \
+    --apiserver-advertise-address=10.0.52.13 \
+    --image-repository registry.aliyuncs.com/google_containers \
+    --kubernetes-version v1.13.3 \
+    --service-cidr=10.1.0.0/16 \
+    --pod-network-cidr=10.244.0.0/16
+
